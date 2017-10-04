@@ -1,0 +1,10 @@
+{
+    "name": "IntelliBot",
+    "version": "0.0.1",
+    "description": "Initial version of IntelliBot",
+    "main": "main.go",
+    "author": {
+        "name": "Benjamin Lang",
+        "name": "Mark Jennings"
+    }
+}
