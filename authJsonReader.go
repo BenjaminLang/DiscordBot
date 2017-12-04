@@ -11,15 +11,8 @@ type Key struct {
     Token string `json:"token"`
 }
 
-/*
-func main() {
-    botToken := getToken()
-    fmt.Println(botToken.toString())
-}
-*/
-
 func getToken() Key {
-    jsonFile, err := os.Open("auth.json")
+    jsonFile, err := os.Open("token.json")
 
     if err != nil {
         fmt.Println(err.Error())

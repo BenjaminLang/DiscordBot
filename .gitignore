@@ -3,7 +3,7 @@
 *.dll
 *.so
 *.dylib
-auth.json
+token.json
 DiscordBot
 
 # Test binary, build with `go test -c`
