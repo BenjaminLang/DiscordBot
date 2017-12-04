@@ -12,12 +12,13 @@ import (
 // Variables used for command line parameters
 var (
 	Token string
+	Session *discordgo.Session
+	Message *discordgo.MessageCreate
 )
 
 func init() {
     botToken := getToken()
     Token = botToken.toString()
-    fmt.Println(Token)
 }
 
 func main() {
@@ -51,19 +52,31 @@ func main() {
 // This function will be called (due to AddHandler above) every time a new
 // message is created on any channel that the autenticated bot has access to.
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
-
+	Session = s;
+	Message = m;
 	// Ignore all messages created by the bot itself
 	// This isn't required in this specific example but it's a good practice.
-	if m.Author.ID == s.State.User.ID {
+	if Message.Author.ID == Session.State.User.ID {
 		return
 	}
-	// If the message is "ping" reply with "Pong!"
-	if m.Content == "ping" {
-		s.ChannelMessageSend(m.ChannelID, "Pong!")
-	}
 
-	// If the message is "pong" reply with "Ping!"
-	if m.Content == "pong" {
-		s.ChannelMessageSend(m.ChannelID, "Ping!")
+	switch Message.Content {
+	case "ping":
+		Session.ChannelMessageSend(Message.ChannelID, "Pong!")
+		break
+	case "pong":
+		Session.ChannelMessageSend(Message.ChannelID, "Ping!")
+		break
+	case strings.HasPrefix(Message.content, "!history"):
+		getHistory()
+		break
 	}
+}
+
+func storeMessage() {
+
+}
+
+func getHistory() {
+	Session.ChannelMessageSend(Message.ChannelID, "Current History")
 }
