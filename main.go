@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
@@ -60,14 +61,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	switch Message.Content {
+	currMessage string = Message.content
+	switch currMessage {
 	case "ping":
 		Session.ChannelMessageSend(Message.ChannelID, "Pong!")
 		break
 	case "pong":
 		Session.ChannelMessageSend(Message.ChannelID, "Ping!")
 		break
-	case strings.HasPrefix(Message.content, "!history"):
+	case strings.HasPrefix(currMessage, "!history"):
 		getHistory()
 		break
 	}
