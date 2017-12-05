@@ -55,5 +55,13 @@ func updateUserDatabase(user User) bool {
 }
 
 func getUserInformation(UserName string) User {
-    return newUser("hello")
+    var results []User
+    err := UsersCollection.Find(bson.M{"UserID" : UserName}).All(&results)
+
+    if err != nil {
+        log.Fatal(err)
+        return newUser("Invalid User")
+    }
+
+    return results[0]
 }
