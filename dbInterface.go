@@ -19,7 +19,6 @@ func newUser(UserName string) User {
     currUser.UserID = UserName
     currUser.Nickname = ""
     currUser.lastMessage = ""
-    currUser.Timestamp = -1
 
     return currUser
 }
@@ -35,15 +34,15 @@ func initializeDataBase() {
         panic(err)
     }
 
-    defer MongoSession.close()
+    defer MongoSession.Close()
 
     MongoSession.SetMode(mgo.Monotonic, true)
 
-    UsersCollection := session.DB("main").C("people")
+    UsersCollection := MongoSession.DB("main").C("people")
 }
 
 func updateUserDatabase(user User) bool {
-    user.Timestamp = time.now
+    user.Timestamp = time.now()
     // Ensure that the user doesn't already exist
     // ifExist := UsersCollection.Find(bson.M{"_"})
     err := UsersCollection.Insert(user)
