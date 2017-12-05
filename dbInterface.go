@@ -1,11 +1,10 @@
 package main
 
 import (
-    "fmt"
     "log"
     "time"
     "gopkg.in/mgo.v2"
-    "gopkg.in/mgo.v2/bson"
+    // "gopkg.in/mgo.v2/bson"
 )
 
 type User struct {
@@ -25,10 +24,10 @@ func newUser(UserName string) User {
     return currUser
 }
 
-var {
+var (
     MongoSession *mgo.Session
     UsersCollection *mgo.Collection
-}
+)
 
 func initializeDataBase() {
     MongoSession, err := mgo.Dial("127.0.0.1")
@@ -46,7 +45,7 @@ func initializeDataBase() {
 func updateUserDatabase(user User) bool {
     // Ensure that the user doesn't already exist
     // ifExist := UsersCollection.Find(bson.M{"_"})
-    UsersCollection.Insert(user)
+    err := UsersCollection.Insert(user)
 
     if err != nil {
         log.Fatal(err)

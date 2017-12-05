@@ -62,7 +62,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	currMessage := Message.content
+	currMessage := Message.Content
 
 	currUser := newUser(Session.State.User.ID)
 	currUser.lastMessage = currMessage
