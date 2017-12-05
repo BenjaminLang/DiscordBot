@@ -15,7 +15,7 @@ type User struct {
 }
 
 func newUser(UserName string) User {
-    currUser := User()
+    var currUser User
     currUser.UserID = UserName
     currUser.Nickname = ""
     currUser.lastMessage = ""
@@ -35,14 +35,15 @@ func initializeDataBase() {
         panic(err)
     }
 
-    defer session.close()
+    defer MongoSession.close()
 
-    session.SetMode(mgo.Monotonic, true)
+    MongoSession.SetMode(mgo.Monotonic, true)
 
     UsersCollection := session.DB("main").C("people")
 }
 
 func updateUserDatabase(user User) bool {
+    user.Timestamp = time.now
     // Ensure that the user doesn't already exist
     // ifExist := UsersCollection.Find(bson.M{"_"})
     err := UsersCollection.Insert(user)
@@ -55,5 +56,5 @@ func updateUserDatabase(user User) bool {
 }
 
 func getUserInformation(UserName string) User {
-    return "Hello"
+    return newUser("hello")
 }

@@ -66,7 +66,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	currUser := newUser(Session.State.User.ID)
 	currUser.lastMessage = currMessage
-	currUser.Timestamp = time.now()
 	updateUserDatabase(currUser)
 
 	switch currMessage {
