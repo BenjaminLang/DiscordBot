@@ -18,6 +18,7 @@ var (
 )
 
 func init() {
+	initializeDataBase();
     botToken := getToken()
     Token = botToken.toString()
 }
@@ -61,7 +62,13 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		return
 	}
 
-	currMessage string = Message.content
+	currMessage := Message.content
+
+	currUser := newUser(Session.State.User.ID)
+	currUser.lastMessage = currMessage
+	currUser.Timestamp = time.now()
+	updateUserDatabase(currUser)
+
 	switch currMessage {
 	case "ping":
 		Session.ChannelMessageSend(Message.ChannelID, "Pong!")
@@ -69,16 +76,13 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	case "pong":
 		Session.ChannelMessageSend(Message.ChannelID, "Ping!")
 		break
-	case strings.HasPrefix(currMessage, "!history"):
-		getHistory()
+	case "!history":
+		getHistory(Session.State.User.ID)
 		break
 	}
 }
 
-func storeMessage() {
-
-}
-
-func getHistory() {
-	Session.ChannelMessageSend(Message.ChannelID, "Current History")
+func getHistory(UserName string) {
+	message := getUserInformation(UserName)
+	fmt.Println(message)
 }
