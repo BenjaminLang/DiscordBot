@@ -23,6 +23,7 @@ async def on_ready():
 
 	for member in discordBot.get_all_members():
 		Users[member.name] = dbInterface.History(member.name, member.id)
+                Users[member.name].logMessage("ASDF")
 
 @discordBot.event
 async def on_message(message):
@@ -31,7 +32,7 @@ async def on_message(message):
 
 	print(message.content)
 	print(message.author)
-	Users[message.author].logMessage(message.content)
+	#Users[message.author].logMessage(message.content)
 
 	await discordBot.process_commands(message)
 
@@ -44,8 +45,8 @@ async def ping(*args):
 async def pong(*args):
 	await discordBot.say(":ping_pong: Ping!")
 
-@discordBot.command()
-async def history(message, num):
-	await discordBot.say(Users[message.author].getLastMessages(num))
+@discordBot.command(pass_context = True)
+async def history(ctx, num):
+	await discordBot.say(Users[ctx.message.author].getLastMessages(num))
 
 discordBot.run(getToken())
