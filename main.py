@@ -25,11 +25,13 @@ async def on_ready():
 		Users[member.name] = dbInterface.History(member.name, member.id)
 
 @discordBot.event
-async def on_message():
-	if message.author == client.user:
+async def on_message(message):
+	if message.author == discordBot.user:
 		return
-
-	Users[message.author].logMessage(message.content)
+        
+        print(message.content)
+        print(message.author)
+        #Users[message.author].logMessage(message.content)
 
 # This is a basic example of a call and response command. You tell it do "this" and it does it.
 @discordBot.command()
@@ -41,7 +43,7 @@ async def pong(*args):
 	await discordBot.say(":ping_pong: Ping!")
 
 @discordBot.command()
-async def history(*args):
-	await discordBot.say(Users[message.author].getLastMessages(1))
+async def history(message, num):
+	await discordBot.say(Users[message.author].getLastMessages(num))
 
 discordBot.run(getToken())
