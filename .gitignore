@@ -4,3 +4,4 @@
 *.so
 *.dylib
 token.json
+__pycache__
