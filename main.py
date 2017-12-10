@@ -28,10 +28,10 @@ async def on_ready():
 async def on_message(message):
 	if message.author == discordBot.user:
 		return
-        
-        print(message.content)
-        print(message.author)
-        #Users[message.author].logMessage(message.content)
+
+	print(message.content)
+	print(message.author)
+    #Users[message.author].logMessage(message.content)
 
 # This is a basic example of a call and response command. You tell it do "this" and it does it.
 @discordBot.command()
