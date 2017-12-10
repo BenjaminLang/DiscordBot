@@ -31,7 +31,9 @@ async def on_message(message):
 
 	print(message.content)
 	print(message.author)
-    #Users[message.author].logMessage(message.content)
+	Users[message.author].logMessage(message.content)
+
+	await discordBot.process_commands(message)
 
 # This is a basic example of a call and response command. You tell it do "this" and it does it.
 @discordBot.command()
